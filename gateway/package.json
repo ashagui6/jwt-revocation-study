@@ -1,0 +1,12 @@
+{
+    "name": "gateway",
+    "version": "1.0.0",
+    "description": "API gateway for JWT revocation study",
+    "main": "src/index.js",
+    "scripts": {
+      "start": "node src/index.js"
+    },
+    "dependencies": {
+      "express": "^4.19.2"
+    }
+  }

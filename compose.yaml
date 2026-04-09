@@ -1,0 +1,65 @@
+services:
+  gateway:
+    build: ./gateway
+    container_name: jwt-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      MODE: ${MODE}
+      AUTH_SERVICE_URL: http://auth-service:8081
+      SERVICE_A_URL: http://service-a:8082
+      SERVICE_B_URL: http://service-b:8083
+    depends_on:
+      - auth-service
+      - service-a
+      - service-b
+
+  auth-service:
+    build: ./auth-service
+    container_name: jwt-auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      PORT: 8081
+      MODE: ${MODE}
+      JWT_SECRET: ${JWT_SECRET}
+      ACCESS_TOKEN_TTL_SECONDS: ${ACCESS_TOKEN_TTL_SECONDS}
+      REFRESH_TOKEN_TTL_SECONDS: ${REFRESH_TOKEN_TTL_SECONDS}
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - redis
+
+  service-a:
+    build: ./service-a
+    container_name: jwt-service-a
+    ports:
+      - "8082:8082"
+    environment:
+      PORT: 8082
+      MODE: ${MODE}
+      JWT_SECRET: ${JWT_SECRET}
+      REDIS_URL: redis://redis:6379
+      SERVICE_NAME: service-a
+    depends_on:
+      - redis
+
+  service-b:
+    build: ./service-b
+    container_name: jwt-service-b
+    ports:
+      - "8083:8083"
+    environment:
+      PORT: 8083
+      MODE: ${MODE}
+      JWT_SECRET: ${JWT_SECRET}
+      REDIS_URL: redis://redis:6379
+      SERVICE_NAME: service-b
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7
+    container_name: jwt-redis
+    ports:
+      - "6379:6379"
