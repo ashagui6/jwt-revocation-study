@@ -1,0 +1,4 @@
+trial,mode,access_token_ttl_seconds,refresh_token_used,login_status,before_logout_service_a,before_logout_service_b,logout_timestamp,after_logout_service_a,after_logout_service_b,refresh_after_logout,first_reject_service_a_timestamp,first_reject_service_b_timestamp,revocation_latency_a_ms,revocation_latency_b_ms,interpretation,notes
+1,stateless_long,3600,no,200,200,200,,,,,,,,,,
+2,short_refresh,120,yes,200,200,200,,,,,,,,,,
+3,blacklist,3600,no,200,200,200,,,,,,,,,,
